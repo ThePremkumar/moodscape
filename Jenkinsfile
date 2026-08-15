@@ -60,6 +60,7 @@ pipeline {
         stage('Push Frontend Image to ECR') {
             steps {
                 sh """
+                    echo $ECR_REGISTRY
                     docker tag \
                     ${FRONTEND_IMAGE}:${IMAGE_TAG} \
                     $ECR_REGISTRY/${FRONTEND_IMAGE}:${IMAGE_TAG}
