@@ -75,10 +75,10 @@ pipeline {
                 sh """
                     docker tag \
                     ${BACKEND_IMAGE}:${IMAGE_TAG} \
-                    ${ECR_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG}
+                    $ECR_REGISTRY/${BACKEND_IMAGE}:${IMAGE_TAG}
 
                     docker push \
-                    ${ECR_REGISTRY}/${BACKEND_IMAGE}:${IMAGE_TAG}
+                    $ECR_REGISTRY/${BACKEND_IMAGE}:${IMAGE_TAG}
                 """
             }
         }
@@ -95,7 +95,7 @@ pipeline {
         }
 
         always {
-            sh 'docker logout ${ECR_REGISTRY} || true'
+            sh 'docker logout $ECR_REGISTRY || true'
             cleanWs()
         }
     }
