@@ -52,7 +52,7 @@ pipeline {
                     --region ${AWS_REGION} |
                     docker login \
                     --username AWS \
-                    --password-stdin ${ECR_REGISTRY}
+                    --password-stdin $ECR_REGISTRY
                 """
             }
         }
@@ -62,10 +62,10 @@ pipeline {
                 sh """
                     docker tag \
                     ${FRONTEND_IMAGE}:${IMAGE_TAG} \
-                    ${ECR_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG}
+                    $ECR_REGISTRY/${FRONTEND_IMAGE}:${IMAGE_TAG}
 
                     docker push \
-                    ${ECR_REGISTRY}/${FRONTEND_IMAGE}:${IMAGE_TAG}
+                    $ECR_REGISTRY/${FRONTEND_IMAGE}:${IMAGE_TAG}
                 """
             }
         }
