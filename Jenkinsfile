@@ -84,6 +84,23 @@ pipeline {
                 """
             }
         }
+        stage('Update the image tag'){
+            steps{
+                sh"""
+                    git clone https://github.com/ThePremkumar/manifests.git
+
+                    sed -i "s|image: .*|image: YOUR_ECR_IMAGE:${BUILD_NUMBER}|" cd/k8s.yaml
+
+                    git config user.name "ThePremkumar"
+                    git config user.email "premkumar2462004@gmail.com"
+
+                    git add cd/k8s.yaml
+                    git commit -m "Update image to ${BUILD_NUMBER}"
+                    git push
+                    
+                """
+            }
+        }
     }
 
     post {
