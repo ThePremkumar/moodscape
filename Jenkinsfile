@@ -88,6 +88,8 @@ pipeline {
             steps{
                 sh"""
                     git clone https://github.com/ThePremkumar/manifests.git
+                    
+                    cd manifests
 
                     sed -i "/name: moodscape-backend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-backend:${IMAGE_TAG}|;}" cd/k8s.yaml
 
