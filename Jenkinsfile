@@ -89,8 +89,9 @@ pipeline {
                 sh"""
                     git clone https://github.com/ThePremkumar/manifests.git
 
-                    sed -i "s|image: .*|image: YOUR_ECR_IMAGE:${BUILD_NUMBER}|" cd/k8s.yaml
+                    sed -i "/name: moodscape-backend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-backend:${IMAGE_TAG}|;}" cd/k8s.yaml
 
+                    sed -i "/name: moodscape-frontend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-frontend:${IMAGE_TAG}|;}" cd/k8s.yaml
                     git config user.name "ThePremkumar"
                     git config user.email "premkumar2462004@gmail.com"
 
