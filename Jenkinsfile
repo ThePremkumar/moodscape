@@ -92,7 +92,7 @@ pipeline {
                     passwordVariable: 'GIT_PASSWORD'
                 )]){
 
-                    sh"""
+                    sh '''
                         set -e
                         rm -rf manifests
 
@@ -111,7 +111,7 @@ pipeline {
                         git diff --cached --quiet && echo "No changes to commit" || git commit -m "Update image to ${IMAGE_TAG}"
                         git push origin HEAD:main
                         
-                    """
+                    '''
                 }
             }
         }
