@@ -86,22 +86,33 @@ pipeline {
         }
         stage('Update the image tag'){
             steps{
-                sh"""
-                    git clone https://github.com/ThePremkumar/manifests.git
-                    
-                    cd manifests
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-manifests',
+                    usernameVariable: 'GIT_USERNAME',
+                    passwordVariable: 'GIT_PASSWORD'
+                )]){
 
-                    sed -i "/name: moodscape-backend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-backend:${IMAGE_TAG}|;}" cd/k8s.yaml
+                    sh"""
+                        set -e
+                        rm -rf manifests
 
-                    sed -i "/name: moodscape-frontend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-frontend:${IMAGE_TAG}|;}" cd/k8s.yaml
-                    git config user.name "ThePremkumar"
-                    git config user.email "premkumar2462004@gmail.com"
+                        git clone --depth 1 https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/ThePremkumar/manifests.git
+                        
+                        cd manifests
 
-                    git add cd/k8s.yaml
-                    git commit -m "Update image to ${BUILD_NUMBER}"
-                    git push
-                    
-                """
+                        sed -i "/name: moodscape-backend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-backend:${IMAGE_TAG}|;}" cd/k8s.yaml
+
+                        sed -i "/name: moodscape-frontend/{n;s|image: .*|image: $ECR_REGISTRY/moodscape-frontend:${IMAGE_TAG}|;}" cd/k8s.yaml
+
+                        git config user.name "ThePremkumar"
+                        git config user.email "premkumar2462004@gmail.com"
+
+                        git add cd/k8s.yaml
+                        git diff --cached --quiet && echo "No changes to commit" || git commit -m "Update image to ${IMAGE_TAG}"
+                        git push origin HEAD:main
+                        
+                    """
+                }
             }
         }
     }
