@@ -14,8 +14,16 @@ pipeline {
     stages {
 
         stage('Checkout') {
+            
             steps {
-                checkout scm
+                withCredentials([usernamePassword(
+                    credentialsId: 'github-manifests',
+                    usernameVariable: 'GIT_USERNAME',
+                    passwordVariable: 'GIT_PASSWORD'
+                )]){
+                    checkout scm
+                }
+
             }
         }
 
