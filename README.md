@@ -26,9 +26,9 @@
 |:-:|:-:|
 | ![Mood Card](screenshots/03_mood_card.png) | ![Timeline](screenshots/04_timeline.png) |
 
-| Analytics Dashboard |
-|:-:|
-| ![Analytics](screenshots/05_analytics.png) |
+| Analytics Dashboard | Deployment |
+|:-:|:-:|
+| ![Analytics](screenshots/05_analytics.png) | ![Deployment](screenshots/06_deployment.png) |
 
 ---
 
@@ -93,7 +93,8 @@ MoodScape/
     ├── 02_mood_selected.png
     ├── 03_mood_card.png
     ├── 04_timeline.png
-    └── 05_analytics.png
+    ├── 05_analytics.png
+    └── 06_deployment.png
 ```
 
 ---
@@ -207,6 +208,16 @@ curl -X POST http://localhost:8000/api/moods \
 | Sad | 😢 | `#636E72` → `#2D3436` → `#6C5CE7` | Gentle rain on a quiet evening |
 | Anxious | 😰 | `#E17055` → `#D63031` → `#FDCB6E` | Flickering embers seeking stillness |
 | Creative | 🎨 | `#A29BFE` → `#FD79A8` → `#00CEC9` | Aurora borealis of imagination |
+
+---
+
+## 🚀 Continuous Deployment
+
+The Kubernetes manifests and deployment configurations for this application are managed in a separate Continuous Deployment (CD) repository:
+
+```bash
+git clone https://github.com/ThePremkumar/manifests.git
+```
 
 ---
 
